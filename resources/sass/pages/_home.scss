@@ -1,0 +1,243 @@
+// Page Home / Dashboard principal
+.home-page {
+    .welcome-banner {
+        @include card;
+        background: linear-gradient(135deg, $primary 0%, darken($primary, 10%) 100%);
+        color: $text-white;
+        margin-bottom: $spacing-xl;
+        padding: $spacing-2xl;
+
+        .welcome-content {
+            max-width: 600px;
+
+            h1 {
+                font-size: $font-size-3xl;
+                font-weight: 700;
+                margin-bottom: $spacing-md;
+            }
+
+            p {
+                font-size: $font-size-lg;
+                opacity: 0.9;
+                margin-bottom: $spacing-lg;
+            }
+
+            .welcome-actions {
+                display: flex;
+                gap: $spacing-md;
+                flex-wrap: wrap;
+
+                .btn {
+                    background: $text-white;
+                    color: $primary;
+
+                    &:hover {
+                        background: darken($text-white, 5%);
+                    }
+                }
+
+                .btn-outline {
+                    background: transparent;
+                    border: 2px solid $text-white;
+                    color: $text-white;
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.1);
+                    }
+                }
+            }
+        }
+    }
+
+    .recent-tutorials {
+        margin-bottom: $spacing-xl;
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: $spacing-lg;
+
+            h2 {
+                font-size: $font-size-2xl;
+                font-weight: 600;
+                color: $text-primary;
+            }
+
+            a {
+                color: $primary;
+                font-size: $font-size-sm;
+                font-weight: 500;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .branches-overview {
+        .branches-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: $spacing-lg;
+
+            @include respond-to('md') {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            @include respond-to('lg') {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .branch-card {
+                @include card;
+                text-align: center;
+                cursor: pointer;
+                border: 2px solid transparent;
+                @include transition(all);
+
+                &:hover {
+                    transform: translateY(-4px);
+                    box-shadow: $shadow-lg;
+                }
+
+                &.administratif {
+                    border-color: $branch-administratif;
+
+                    .branch-icon {
+                        background: rgba($branch-administratif, 0.1);
+                        color: $branch-administratif;
+                    }
+                }
+
+                &.comptabilite {
+                    border-color: $branch-comptabilite;
+
+                    .branch-icon {
+                        background: rgba($branch-comptabilite, 0.1);
+                        color: $branch-comptabilite;
+                    }
+                }
+
+                &.technique {
+                    border-color: $branch-technique;
+
+                    .branch-icon {
+                        background: rgba($branch-technique, 0.1);
+                        color: $branch-technique;
+                    }
+                }
+
+                &.commercial {
+                    border-color: $branch-commercial;
+
+                    .branch-icon {
+                        background: rgba($branch-commercial, 0.1);
+                        color: $branch-commercial;
+                    }
+                }
+
+                .branch-icon {
+                    width: 4rem;
+                    height: 4rem;
+                    border-radius: $border-radius-lg;
+                    @include center-flex;
+                    font-size: $font-size-2xl;
+                    margin: 0 auto $spacing-lg;
+                }
+
+                .branch-name {
+                    font-size: $font-size-lg;
+                    font-weight: 600;
+                    color: $text-primary;
+                    margin-bottom: $spacing-sm;
+                }
+
+                .branch-count {
+                    font-size: $font-size-sm;
+                    color: $text-secondary;
+                    margin-bottom: $spacing-md;
+                }
+
+                .branch-link {
+                    color: $primary;
+                    font-size: $font-size-sm;
+                    font-weight: 500;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+
+    .quick-actions {
+        margin-top: $spacing-xl;
+
+        h2 {
+            font-size: $font-size-2xl;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-lg;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: $spacing-md;
+
+            @include respond-to('md') {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            @include respond-to('lg') {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .action-card {
+                @include card;
+                display: flex;
+                align-items: center;
+                gap: $spacing-lg;
+                cursor: pointer;
+                @include transition(all);
+
+                &:hover {
+                    transform: translateX(4px);
+                    box-shadow: $shadow-md;
+                }
+
+                .action-icon {
+                    width: 3rem;
+                    height: 3rem;
+                    border-radius: $border-radius-md;
+                    @include center-flex;
+                    background: rgba($primary, 0.1);
+                    color: $primary;
+                    font-size: $font-size-xl;
+                    flex-shrink: 0;
+                }
+
+                .action-content {
+                    flex: 1;
+
+                    .action-title {
+                        font-size: $font-size-base;
+                        font-weight: 600;
+                        color: $text-primary;
+                        margin-bottom: $spacing-xs;
+                    }
+
+                    .action-description {
+                        font-size: $font-size-sm;
+                        color: $text-secondary;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,212 @@
+// Dashboard Layout
+.dashboard-layout {
+    min-height: 100vh;
+    background: $body-bg;
+
+    .dashboard-content {
+        margin-top: $navbar-height;
+        padding: $spacing-xl;
+                    margin-left: 300px;
+            margin-top: 100px;
+        @include transition(margin-left);
+
+        // Sur desktop uniquement
+        @media (min-width: 768px) {
+            margin-left: $sidebar-width;
+
+            &.sidebar-collapsed {
+                margin-left: $sidebar-collapsed-width;
+            }
+        }
+
+        @include respond-to('lg') {
+            padding: $spacing-2xl;
+        }
+    }
+
+    .dashboard-header {
+        margin-bottom: $spacing-xl;
+
+        .dashboard-title {
+            font-size: $font-size-3xl;
+            font-weight: 700;
+            color: $text-primary;
+            margin-bottom: $spacing-sm;
+        }
+
+        .dashboard-subtitle {
+            font-size: $font-size-base;
+            color: $text-secondary;
+        }
+
+        .dashboard-actions {
+            display: flex;
+            gap: $spacing-md;
+            margin-top: $spacing-lg;
+        }
+    }
+
+    // Grid pour les stats
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: $spacing-lg;
+        margin-bottom: $spacing-xl;
+
+        @include respond-to('md') {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include respond-to('lg') {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .stat-card {
+            @include card;
+            display: flex;
+            align-items: center;
+            gap: $spacing-lg;
+
+            .stat-icon {
+                width: 3rem;
+                height: 3rem;
+                border-radius: $border-radius-lg;
+                @include center-flex;
+                font-size: $font-size-xl;
+                flex-shrink: 0;
+
+                &.primary {
+                    background: rgba($primary, 0.1);
+                    color: $primary;
+                }
+
+                &.success {
+                    background: rgba($success, 0.1);
+                    color: $success;
+                }
+
+                &.warning {
+                    background: rgba($warning, 0.1);
+                    color: $warning;
+                }
+
+                &.danger {
+                    background: rgba($danger, 0.1);
+                    color: $danger;
+                }
+            }
+
+            .stat-content {
+                flex: 1;
+
+                .stat-label {
+                    font-size: $font-size-sm;
+                    color: $text-muted;
+                    margin-bottom: $spacing-xs;
+                }
+
+                .stat-value {
+                    font-size: $font-size-2xl;
+                    font-weight: 700;
+                    color: $text-primary;
+                }
+
+                .stat-change {
+                    font-size: $font-size-xs;
+                    margin-top: $spacing-xs;
+
+                    &.positive {
+                        color: $success;
+                    }
+
+                    &.negative {
+                        color: $danger;
+                    }
+                }
+            }
+        }
+    }
+
+    // Grid pour les tutoriels
+    .tutorials-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: $spacing-lg;
+
+        @include respond-to('md') {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include respond-to('lg') {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @include respond-to('xl') {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    // Section
+    .dashboard-section {
+        margin-bottom: $spacing-2xl;
+
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: $spacing-lg;
+
+            .section-title {
+                font-size: $font-size-2xl;
+                font-weight: 600;
+                color: $text-primary;
+            }
+
+            .section-actions {
+                display: flex;
+                gap: $spacing-md;
+            }
+        }
+    }
+
+    // Filtres
+    .filters-bar {
+        @include card;
+        margin-bottom: $spacing-xl;
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-md;
+        align-items: center;
+
+        .filter-item {
+            flex: 1;
+            min-width: 200px;
+        }
+    }
+
+    // Empty state
+    .empty-state {
+        text-align: center;
+        padding: $spacing-2xl;
+
+        .empty-icon {
+            font-size: 4rem;
+            color: $text-muted;
+            margin-bottom: $spacing-lg;
+        }
+
+        .empty-title {
+            font-size: $font-size-xl;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-sm;
+        }
+
+        .empty-description {
+            font-size: $font-size-base;
+            color: $text-secondary;
+            margin-bottom: $spacing-lg;
+        }
+    }
+}

@@ -1,0 +1,168 @@
+// Navbar
+.navbar {
+    position: fixed;
+    top: 0;
+    left: $sidebar-width;
+    right: 0;
+    height: $navbar-height;
+    background: $navbar-bg;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $spacing-xl;
+    z-index: 100;
+    @include transition(left);
+
+    @include respond-to('md') {
+        left: $sidebar-width;
+    }
+
+    // Quand la sidebar est collapsée
+    &.sidebar-collapsed {
+        left: $sidebar-collapsed-width;
+    }
+
+    .navbar-left {
+        display: flex;
+        align-items: center;
+        gap: $spacing-lg;
+
+        .navbar-toggle {
+            @include button-base;
+            background: transparent;
+            padding: $spacing-sm;
+            color: $text-secondary;
+
+            &:hover {
+                background: #f1f5f9;
+            }
+
+            svg {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+
+        .navbar-title {
+            font-size: $font-size-xl;
+            font-weight: 600;
+            color: $text-primary;
+        }
+    }
+
+    .navbar-right {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+
+        .navbar-search {
+            position: relative;
+            display: none;
+
+            @include respond-to('md') {
+                display: block;
+            }
+
+            input {
+                padding: $spacing-sm $spacing-md $spacing-sm $spacing-xl;
+                border: 1px solid #e2e8f0;
+                border-radius: $border-radius-lg;
+                width: 300px;
+                font-size: $font-size-sm;
+                @include transition(border-color);
+
+                &:focus {
+                    outline: none;
+                    border-color: $primary;
+                }
+            }
+
+            svg {
+                position: absolute;
+                left: $spacing-md;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 1.25rem;
+                height: 1.25rem;
+                color: $text-muted;
+            }
+        }
+
+        .navbar-notifications {
+            position: relative;
+
+            button {
+                @include button-base;
+                background: transparent;
+                padding: $spacing-sm;
+                color: $text-secondary;
+                position: relative;
+
+                &:hover {
+                    background: #f1f5f9;
+                }
+
+                svg {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+
+                .notification-badge {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 8px;
+                    height: 8px;
+                    background: $danger;
+                    border-radius: 50%;
+                    border: 2px solid $navbar-bg;
+                }
+            }
+        }
+
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+            cursor: pointer;
+            padding: $spacing-xs $spacing-sm;
+            border-radius: $border-radius-md;
+            @include transition(background);
+
+            &:hover {
+                background: #f1f5f9;
+            }
+
+            .user-avatar {
+                width: 2.5rem;
+                height: 2.5rem;
+                border-radius: 50%;
+                background: $primary;
+                color: $text-white;
+                @include center-flex;
+                font-weight: 600;
+                font-size: $font-size-sm;
+            }
+
+            .user-info {
+                display: none;
+
+                @include respond-to('md') {
+                    display: block;
+                }
+
+                .user-name {
+                    font-size: $font-size-sm;
+                    font-weight: 500;
+                    color: $text-primary;
+                }
+
+                .user-role {
+                    font-size: $font-size-xs;
+                    color: $text-muted;
+                }
+            }
+        }
+    }
+}

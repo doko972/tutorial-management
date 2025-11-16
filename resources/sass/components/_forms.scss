@@ -1,0 +1,145 @@
+// Forms
+.form-group {
+    margin-bottom: $spacing-lg;
+
+    label {
+        display: block;
+        font-size: $font-size-sm;
+        font-weight: 500;
+        color: $text-primary;
+        margin-bottom: $spacing-sm;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: $spacing-sm $spacing-md;
+        border: 1px solid #e2e8f0;
+        border-radius: $border-radius-md;
+        font-size: $font-size-base;
+        color: $text-primary;
+        background: $card-bg;
+        @include transition(border-color);
+
+        &:focus {
+            outline: none;
+            border-color: $primary;
+            box-shadow: 0 0 0 3px rgba($primary, 0.1);
+        }
+
+        &::placeholder {
+            color: $text-muted;
+        }
+
+        &:disabled {
+            background: #f1f5f9;
+            cursor: not-allowed;
+        }
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    select.form-control {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right $spacing-sm center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: $spacing-xl;
+    }
+
+    .form-text {
+        display: block;
+        margin-top: $spacing-xs;
+        font-size: $font-size-xs;
+        color: $text-muted;
+    }
+
+    .form-error {
+        display: block;
+        margin-top: $spacing-xs;
+        font-size: $font-size-xs;
+        color: $danger;
+    }
+
+    &.has-error {
+        .form-control {
+            border-color: $danger;
+
+            &:focus {
+                box-shadow: 0 0 0 3px rgba($danger, 0.1);
+            }
+        }
+    }
+}
+
+// Checkbox & Radio
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-right: $spacing-sm;
+        cursor: pointer;
+    }
+
+    label {
+        margin: 0;
+        cursor: pointer;
+        font-weight: normal;
+    }
+}
+
+// File upload
+.file-upload {
+    position: relative;
+
+    input[type="file"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .file-upload-label {
+        @include button-base;
+        background: $card-bg;
+        border: 2px dashed #e2e8f0;
+        color: $text-secondary;
+        padding: $spacing-xl;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+            border-color: $primary;
+            color: $primary;
+        }
+
+        .upload-icon {
+            font-size: $font-size-3xl;
+            margin-bottom: $spacing-sm;
+        }
+    }
+
+    .file-preview {
+        margin-top: $spacing-md;
+        padding: $spacing-md;
+        background: #f8fafc;
+        border-radius: $border-radius-md;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+        }
+    }
+}

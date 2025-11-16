@@ -1,0 +1,185 @@
+// Sidebar
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: $sidebar-width;
+    height: 100vh;
+    background: $sidebar-bg;
+    color: $text-white;
+    z-index: 200;
+    @include transition(width);
+    overflow-x: hidden;
+    @include custom-scrollbar;
+
+    &.collapsed {
+        width: $sidebar-collapsed-width;
+
+        .sidebar-logo-text,
+        .nav-text,
+        .branch-name {
+            display: none;
+        }
+
+        .sidebar-logo {
+            justify-content: center;
+        }
+
+        .nav-item {
+            justify-content: center;
+        }
+    }
+
+    .sidebar-logo {
+        height: $navbar-height;
+        display: flex;
+        align-items: center;
+        padding: 0 $spacing-lg;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        gap: $spacing-md;
+
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: $primary;
+            border-radius: $border-radius-md;
+            @include center-flex;
+            font-weight: 700;
+            font-size: $font-size-lg;
+        }
+
+        .sidebar-logo-text {
+            font-size: $font-size-lg;
+            font-weight: 700;
+        }
+    }
+
+    .sidebar-nav {
+        padding: $spacing-lg 0;
+
+        .nav-section {
+            margin-bottom: $spacing-xl;
+
+            .nav-section-title {
+                padding: 0 $spacing-lg;
+                font-size: $font-size-xs;
+                font-weight: 600;
+                color: rgba(255, 255, 255, 0.5);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: $spacing-sm;
+            }
+
+            .nav-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+                .nav-item {
+                    margin-bottom: $spacing-xs;
+
+                    a {
+                        display: flex;
+                        align-items: center;
+                        gap: $spacing-md;
+                        padding: $spacing-md $spacing-lg;
+                        color: rgba(255, 255, 255, 0.7);
+                        text-decoration: none;
+                        @include transition(all);
+                        position: relative;
+
+                        &:hover {
+                            background: rgba(255, 255, 255, 0.05);
+                            color: $text-white;
+                        }
+
+                        &.active {
+                            background: rgba($primary, 0.2);
+                            color: $text-white;
+
+                            &::before {
+                                content: '';
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                bottom: 0;
+                                width: 4px;
+                                background: $primary;
+                            }
+                        }
+
+                        .nav-icon {
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            flex-shrink: 0;
+                        }
+
+                        .nav-text {
+                            font-size: $font-size-sm;
+                            font-weight: 500;
+                            flex: 1;
+                        }
+
+                        .nav-badge {
+                            padding: $spacing-xs $spacing-sm;
+                            background: rgba(255, 255, 255, 0.1);
+                            border-radius: $border-radius-sm;
+                            font-size: $font-size-xs;
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .sidebar-branches {
+        padding: $spacing-lg;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        .branches-title {
+            font-size: $font-size-xs;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: $spacing-md;
+        }
+
+        .branch-item {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+            padding: $spacing-sm;
+            border-radius: $border-radius-md;
+            margin-bottom: $spacing-xs;
+            cursor: pointer;
+            @include transition(background);
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .branch-color {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+
+            .branch-name {
+                font-size: $font-size-sm;
+                color: rgba(255, 255, 255, 0.7);
+            }
+
+            .branch-count {
+                margin-left: auto;
+                padding: $spacing-xs $spacing-sm;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: $border-radius-sm;
+                font-size: $font-size-xs;
+                font-weight: 600;
+            }
+        }
+    }
+}

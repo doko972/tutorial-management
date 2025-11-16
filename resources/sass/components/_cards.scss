@@ -1,0 +1,110 @@
+// Cards
+.card {
+    @include card;
+
+    &-header {
+        padding-bottom: $spacing-md;
+        border-bottom: 1px solid #e2e8f0;
+        margin-bottom: $spacing-md;
+
+        h3, h4 {
+            margin: 0;
+            color: $text-primary;
+        }
+    }
+
+    &-body {
+        color: $text-secondary;
+    }
+
+    &-footer {
+        padding-top: $spacing-md;
+        border-top: 1px solid #e2e8f0;
+        margin-top: $spacing-md;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    // Card tutorial
+    &-tutorial {
+        position: relative;
+        cursor: pointer;
+        @include transition(transform);
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: $shadow-lg;
+        }
+
+        .tutorial-thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: $border-radius-md;
+            margin-bottom: $spacing-md;
+        }
+
+        .tutorial-badge {
+            position: absolute;
+            top: $spacing-md;
+            right: $spacing-md;
+            padding: $spacing-xs $spacing-sm;
+            border-radius: $border-radius-sm;
+            font-size: $font-size-xs;
+            font-weight: 600;
+            color: $text-white;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .tutorial-title {
+            font-size: $font-size-lg;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: $spacing-sm;
+            @include line-clamp(2);
+        }
+
+        .tutorial-description {
+            font-size: $font-size-sm;
+            color: $text-secondary;
+            margin-bottom: $spacing-md;
+            @include line-clamp(3);
+        }
+
+        .tutorial-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: $font-size-xs;
+            color: $text-muted;
+
+            .meta-item {
+                display: flex;
+                align-items: center;
+                gap: $spacing-xs;
+            }
+        }
+    }
+
+    // Card avec couleur de branche
+    &-branch {
+        border-left: 4px solid;
+
+        &.administratif {
+            border-color: $branch-administratif;
+        }
+
+        &.comptabilite {
+            border-color: $branch-comptabilite;
+        }
+
+        &.technique {
+            border-color: $branch-technique;
+        }
+
+        &.commercial {
+            border-color: $branch-commercial;
+        }
+    }
+}
