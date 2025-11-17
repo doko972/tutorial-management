@@ -1,0 +1,54 @@
+.landing-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #3b82f6 0%, #64748b 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.landing-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.landing-navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+}
+
+.landing-logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.landing-logo .logo-animation {
+    width: 3rem;
+    height: 3rem;
+}
+
+.landing-nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.landing-nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.landing-nav-links a:hover {
+    opacity: 0.8;
+}

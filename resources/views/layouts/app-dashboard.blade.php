@@ -30,5 +30,26 @@
     </div>
 
     @stack('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script>
+        // Animation logo header (coloré)
+        const logoHeader = lottie.loadAnimation({
+            container: document.getElementById('logo-header'),
+            renderer: 'svg',
+            loop: false, // Pas de boucle
+            autoplay: true, // Joue une fois au chargement
+            path: '/animations/logo-white.json'
+        });
+
+        // Rejouer l'animation au survol
+        document.getElementById('logo-header').addEventListener('mouseenter', function () {
+            logoHeader.goToAndPlay(0, true); // Rejoue depuis le début
+        });
+
+        // Rejouer l'animation au survol
+        document.getElementById('logo-footer').addEventListener('mouseenter', function () {
+            logoFooter.goToAndPlay(0, true); // Rejoue depuis le début
+        });
+    </script>
 </body>
 </html>

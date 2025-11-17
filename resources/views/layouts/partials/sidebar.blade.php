@@ -1,10 +1,8 @@
 <aside class="sidebar" id="sidebar">
     <!-- Logo -->
-    <div class="sidebar-logo">
-        <div class="logo-icon">
-            HT
-        </div>
-        <span class="sidebar-logo-text">HR Télécoms</span>
+    <div class="landing-logo">
+        <div id="logo-header" class="logo-animation"></div>
+        <span>HR Télécoms</span>
     </div>
 
     <!-- Navigation -->
