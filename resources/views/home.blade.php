@@ -18,7 +18,7 @@
     <style>
         .landing-page {
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #64748b 100%);
             position: relative;
             overflow: hidden;
         }
@@ -54,7 +54,7 @@
             width: 3rem;
             height: 3rem;
             background: white;
-            color: #667eea;
+            color: #3b82f6;
             border-radius: 0.75rem;
             display: flex;
             align-items: center;
@@ -122,7 +122,7 @@
 
         .hero-btn-primary {
             background: white;
-            color: #667eea;
+            color: #3b82f6;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
@@ -165,7 +165,7 @@
         .stat-number {
             font-size: 3rem;
             font-weight: 800;
-            color: #667eea;
+            color: #3b82f6;
             margin-bottom: 0.5rem;
         }
 
@@ -218,7 +218,7 @@
         .feature-icon {
             width: 4rem;
             height: 4rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #64748b 100%);
             border-radius: 1rem;
             display: flex;
             align-items: center;
@@ -300,7 +300,7 @@
         .cta-section {
             padding: 6rem 2rem;
             text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #64748b 100%);
             color: white;
         }
 
