@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Tag;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class TagSeeder extends Seeder
 {
@@ -12,34 +13,44 @@ class TagSeeder extends Seeder
      */
     public function run(): void
     {
-        $tags = [
-            'Débutant',
-            'Intermédiaire',
-            'Avancé',
-            'Windows',
-            'Mac',
-            'Linux',
-            'Réseau',
-            'Sécurité',
-            'Logiciel',
-            'Matériel',
-            'Cloud',
-            'Configuration',
-            'Dépannage',
-            'Guide',
-            'Procédure',
-            'Formation',
-            'Astuce',
-            'Excel',
-            'Word',
-            'PowerPoint',
+        $tagsByFamily = [
+            'Difficulté' => [
+                'Débutant',
+                'Intermédiaire',
+                'Avancé',
+            ],
+            'Office' => [
+                'Word',
+                'Excel',
+                'PowerPoint',
+                'Outlook',
+            ],
+            'Réseau' => [
+                'Configuration',
+                'Dépannage',
+                'Installation',
+                'Sécurité',
+            ],
+            'Système' => [
+                'Windows',
+                'Linux',
+                'macOS',
+            ],
+            'Durée' => [
+                'Rapide (< 10min)',
+                'Moyen (10-30min)',
+                'Long (> 30min)',
+            ],
         ];
 
-        foreach ($tags as $tagName) {
-            Tag::create([
-                'name' => $tagName,
-                'slug' => \Illuminate\Support\Str::slug($tagName),
-            ]);
+        foreach ($tagsByFamily as $family => $tags) {
+            foreach ($tags as $tagName) {
+                Tag::create([
+                    'name' => $tagName,
+                    'slug' => Str::slug($tagName),
+                    'family' => $family,
+                ]);
+            }
         }
     }
 }

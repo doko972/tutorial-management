@@ -101,7 +101,11 @@
             </div>
             <div class="branches-grid">
                 @php
-                    $branches = \App\Models\Branch::withCount('tutorials')->get();
+                    $branches = \App\Models\Branch::whereNull('parent_id')->withCount('tutorials')->with([
+                        'children' => function ($query) {
+                            $query->withCount('tutorials');
+                        }
+                    ])->get();
                 @endphp
                 @foreach($branches as $branch)
                     <div class="branch-card" style="border-top-color: {{ $branch->color }};">
@@ -114,7 +118,24 @@
                         </div>
                         <div class="branch-name">{{ $branch->name }}</div>
                         <div class="branch-count">{{ $branch->tutorials_count }} tutoriel(s)</div>
-                        <a href="{{ route('tutorials.index', ['branch' => $branch->id]) }}" class="branch-link">Voir les tutoriels →</a>
+
+                        @if($branch->children->count() > 0)
+                            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                                <div style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 0.5rem;">
+                                    Sous-branches :</div>
+                                @foreach($branch->children as $child)
+                                    <div
+                                        style="display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.875rem;">
+                                        <span style="color: #64748b;">{{ $child->name }}</span>
+                                        <span
+                                            style="color: {{ $branch->color }}; font-weight: 600;">{{ $child->tutorials_count }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        <a href="{{ route('tutorials.index', ['branch' => $branch->id]) }}" class="branch-link">Voir les
+                            tutoriels →</a>
                     </div>
                 @endforeach
             </div>

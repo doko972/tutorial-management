@@ -58,7 +58,36 @@
                         <span class="form-error">{{ $message }}</span>
                     @enderror
                 </div>
-
+                <!-- Branche -->
+                <div class="form-group">
+                    <label for="branch_id">Branche du tutoriel *</label>
+                    <select id="branch_id" name="branch_id" class="form-control @error('branch_id') has-error @enderror" required>
+                        <option value="">Sélectionnez une branche</option>
+                        @foreach($branches as $branch)
+                            @if($branch->parent_id === null)
+                                <!-- Branche principale -->
+                                <optgroup label="📂 {{ $branch->name }}">
+                                    <option value="{{ $branch->id }}" {{ old('branch_id', $myTutorial->branch_id) == $branch->id ? 'selected' : '' }}>
+                                        {{ $branch->name }}
+                                    </option>
+                                    
+                                    <!-- Sous-branches -->
+                                    @foreach($branch->children as $child)
+                                        <option value="{{ $child->id }}" {{ old('branch_id', $myTutorial->branch_id) == $child->id ? 'selected' : '' }}>
+                                            &nbsp;&nbsp;└─ {{ $child->name }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @endif
+                        @endforeach
+                    </select>
+                    @error('branch_id')
+                        <span class="form-error">{{ $message }}</span>
+                    @enderror
+                    <small style="display: block; margin-top: 0.5rem; color: #64748b;">
+                        Choisissez la branche pour laquelle ce tutoriel est destiné
+                    </small>
+                </div>
                 <!-- Type de fichier -->
                 <div class="form-group">
                     <label for="file_type">Type de contenu *</label>
@@ -81,7 +110,7 @@
                     <textarea 
                         id="content" 
                         name="content" 
-                        class="form-control @error('content') has-error @enderror" 
+                        class="form-control ckeditor @error('content') has-error @enderror" 
                         rows="10"
                     >{{ old('content', $myTutorial->content) }}</textarea>
                     @error('content')
@@ -245,29 +274,66 @@
                     @enderror
                 </div>
 
-                <!-- Tags -->
-                @if($tags->count() > 0)
-                <div class="form-group">
-                    <label>Tags</label>
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        @foreach($tags as $tag)
-                            <div class="form-check">
-                                <input 
-                                    type="checkbox" 
-                                    id="tag_{{ $tag->id }}" 
-                                    name="tags[]" 
-                                    value="{{ $tag->id }}"
-                                    {{ in_array($tag->id, old('tags', $myTutorial->tags->pluck('id')->toArray())) ? 'checked' : '' }}
-                                >
-                                <label for="tag_{{ $tag->id }}">{{ $tag->name }}</label>
-                            </div>
-                        @endforeach
+<!-- Tags par famille -->
+@if($tags->count() > 0)
+<div class="form-group">
+    <label>Tags</label>
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        @php
+            $tagsByFamily = $tags->groupBy('family');
+        @endphp
+        
+        @foreach($tagsByFamily as $family => $familyTags)
+            <div style="border: 1px solid #e2e8f0; border-radius: 0.5rem; overflow: hidden;">
+                <!-- En-tête de la famille -->
+                <div style="background: #f8fafc; padding: 1rem; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #0f172a; cursor: pointer;" 
+                     onclick="toggleFamily('family-{{ Str::slug($family) }}')">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>{{ $family }}</span>
+                        <svg id="icon-family-{{ Str::slug($family) }}" style="width: 1.25rem; height: 1.25rem; transition: transform 0.3s;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
                     </div>
-                    @error('tags')
-                        <span class="form-error">{{ $message }}</span>
-                    @enderror
                 </div>
-                @endif
+                
+                <!-- Tags de la famille -->
+                <div id="family-{{ Str::slug($family) }}" style="padding: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    @foreach($familyTags as $tag)
+                        <div class="form-check">
+                            <input 
+                                type="checkbox" 
+                                id="tag_{{ $tag->id }}" 
+                                name="tags[]" 
+                                value="{{ $tag->id }}"
+                                {{ in_array($tag->id, old('tags', $myTutorial->tags->pluck('id')->toArray())) ? 'checked' : '' }}
+                            >
+                            <label for="tag_{{ $tag->id }}">{{ $tag->name }}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
+    </div>
+    @error('tags')
+        <span class="form-error">{{ $message }}</span>
+    @enderror
+</div>
+
+<script>
+function toggleFamily(familyId) {
+    const content = document.getElementById(familyId);
+    const icon = document.getElementById('icon-' + familyId);
+    
+    if (content.style.display === 'none') {
+        content.style.display = 'flex';
+        icon.style.transform = 'rotate(0deg)';
+    } else {
+        content.style.display = 'none';
+        icon.style.transform = 'rotate(-90deg)';
+    }
+}
+</script>
+@endif
 
                 <!-- Publier -->
                 <div class="form-group">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tutorial;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -31,8 +32,10 @@ class MyTutorialController extends Controller
      */
     public function create()
     {
-        $tags = Tag::all();
-        return view('my-tutorials.create', compact('tags'));
+        $tags = Tag::orderBy('family')->orderBy('name')->get();
+        $branches = Branch::with('children')->whereNull('parent_id')->get();
+        
+        return view('my-tutorials.create', compact('tags', 'branches'));
     }
 
     /**
@@ -102,9 +105,11 @@ class MyTutorialController extends Controller
     public function edit(Tutorial $myTutorial)
     {
         $this->authorize('update', $myTutorial);
-
-        $tags = Tag::all();
-        return view('my-tutorials.edit', compact('myTutorial', 'tags'));
+        
+        $tags = Tag::orderBy('family')->orderBy('name')->get();
+        $branches = Branch::with('children')->whereNull('parent_id')->get();
+        
+        return view('my-tutorials.edit', compact('myTutorial', 'tags', 'branches'));
     }
 
     /**
