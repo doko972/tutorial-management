@@ -33,6 +33,21 @@ class TagSeeder extends Seeder
             'Excel',
             'Word',
             'PowerPoint',
+            'Téléphonie',
+            'Centrex',
+            'IPBX',
+            'Firewall',
+            'Trunk',
+            'NAT',
+            'Omada',
+            'Yealink',
+            'YMCS',
+            'Vision',
+            'OVH',
+            'Alphalink',
+            'Ema',
+            'Backup',
+            '4G/5G'
         ];
 
         foreach ($tags as $tagName) {
