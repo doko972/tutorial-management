@@ -183,7 +183,7 @@ php artisan migrate
 # Seeders (données de base)
 php artisan db:seed --class=BranchSeeder
 php artisan db:seed --class=TagSeeder
-php artisan db:seed --class=UserSeeder
+php artisan db:seed --class=AdminUserSeeder
 
 # (Optionnel) Tutoriels de démonstration
 php artisan db:seed --class=TutorialSeeder

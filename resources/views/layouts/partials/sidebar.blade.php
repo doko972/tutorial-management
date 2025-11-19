@@ -32,7 +32,7 @@
                         <span class="nav-text">Tous les tutoriels</span>
                     </a>
                 </li>
-                @if(auth()->user()->branch_id)
+                @if (auth()->user()->branch_id)
                     <li class="nav-item">
                         <a href="{{ route('my-tutorials.index') }}"
                             class="{{ request()->routeIs('my-tutorials.*') ? 'active' : '' }}">
@@ -48,7 +48,7 @@
             </ul>
         </div>
 
-        @if(auth()->user()->isAdmin())
+        @if (auth()->user()->isAdmin())
             <!-- Admin -->
             <div class="nav-section">
                 <div class="nav-section-title">Administration</div>
@@ -82,16 +82,75 @@
 
     <!-- Branches -->
     <div class="sidebar-branches">
-        <div class="branches-title">Branches</div>
+        <div class="sidebar-section-title">Branches</div>
         @php
-            $branches = \App\Models\Branch::withCount('tutorials')->get();
+            $branches = \App\Models\Branch::whereNull('parent_id')
+                ->withCount('tutorials')
+                ->with([
+                    'children' => function ($query) {
+                        $query->withCount('tutorials');
+                    },
+                ])
+                ->get();
         @endphp
-        @foreach($branches as $branch)
-            <div class="branch-item">
-                <div class="branch-color" style="background-color: {{ $branch->color }}"></div>
-                <span class="branch-name">{{ $branch->name }}</span>
-                <span class="branch-count">{{ $branch->tutorials_count }}</span>
+        @foreach ($branches as $branch)
+            <div class="branch-group">
+                <!-- Branche parente (cliquable pour ouvrir/fermer) -->
+                <div class="branch-item branch-parent" onclick="toggleBranch('branch-{{ $branch->id }}')">
+                    <div class="branch-color" style="background-color: {{ $branch->color }}"></div>
+                    <span class="branch-name">{{ $branch->name }}</span>
+                    <span class="branch-count">{{ $branch->tutorials_count }}</span>
+                    @if ($branch->children->count() > 0)
+                        <svg class="branch-chevron" id="chevron-branch-{{ $branch->id }}" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24"
+                            style="width: 1rem; height: 1rem; margin-left: auto; transition: transform 0.3s;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    @endif
+                </div>
+
+                <!-- Sous-branches (cachées par défaut) -->
+                @if ($branch->children->count() > 0)
+                    <div class="branch-children" id="branch-{{ $branch->id }}" style="display: none;">
+                        @foreach ($branch->children as $child)
+                            <a href="{{ route('tutorials.index', ['branch' => $child->id]) }}"
+                                class="branch-item branch-child {{ request('branch') == $child->id ? 'active' : '' }}">
+                                <div style="width: 12px;"></div> <!-- Espace pour l'alignement -->
+                                <span class="branch-tree">└─</span>
+                                <span class="branch-name">{{ $child->name }}</span>
+                                <span class="branch-count">{{ $child->tutorials_count }}</span>
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         @endforeach
     </div>
+
+    <script>
+        function toggleBranch(branchId) {
+            const children = document.getElementById(branchId);
+            const chevron = document.getElementById('chevron-' + branchId);
+
+            if (children) {
+                if (children.style.display === 'none') {
+                    children.style.display = 'block';
+                    if (chevron) chevron.style.transform = 'rotate(180deg)';
+                } else {
+                    children.style.display = 'none';
+                    if (chevron) chevron.style.transform = 'rotate(0deg)';
+                }
+            }
+        }
+
+        // Ouvrir automatiquement la branche active
+        document.addEventListener('DOMContentLoaded', function() {
+            const activeChild = document.querySelector('.branch-child.active');
+            if (activeChild) {
+                const parentId = activeChild.closest('.branch-children').id;
+                toggleBranch(parentId);
+            }
+        });
+    </script>
 </aside>

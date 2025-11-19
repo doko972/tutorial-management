@@ -12,24 +12,44 @@ class Branch extends Model
     protected $fillable = [
         'name',
         'slug',
-        'color',
-        'icon',
         'description',
+        'color',
+        'parent_id', // Ajoute cette ligne
     ];
 
-    /**
-     * Relation avec les utilisateurs
-     */
+    // Relation : une branche appartient à une branche parente
+    public function parent()
+    {
+        return $this->belongsTo(Branch::class, 'parent_id');
+    }
+
+    // Relation : une branche a plusieurs sous-branches
+    public function children()
+    {
+        return $this->hasMany(Branch::class, 'parent_id');
+    }
+
+    // Relation : tutoriels de la branche
+    public function tutorials()
+    {
+        return $this->hasMany(Tutorial::class);
+    }
+
+    // Relation : utilisateurs de la branche
     public function users()
     {
         return $this->hasMany(User::class);
     }
 
-    /**
-     * Relation avec les tutoriels
-     */
-    public function tutorials()
+    // Méthode helper : vérifier si c'est une branche parente
+    public function isParent()
     {
-        return $this->hasMany(Tutorial::class);
+        return $this->children()->count() > 0;
+    }
+
+    // Méthode helper : obtenir toutes les branches avec leurs enfants
+    public static function getAllWithChildren()
+    {
+        return self::whereNull('parent_id')->with('children')->get();
     }
 }

@@ -16,16 +16,27 @@
             </ol>
         </nav>
 
-        <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
-            <style>
-                @media (min-width: 1024px) {
-                    .tutorial-layout {
-                        grid-template-columns: 2fr 1fr !important;
-                    }
+    <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+        <style>
+        @media (min-width: 1024px) {
+                .tutorial-layout {
+                    grid-template-columns: 2fr 1fr !important;
                 }
-            </style>
+            }
+        </style>
+        
+        <div class="tutorial-layout" style="">
+            <!-- Contenu principal -->
+            <div>
+                <div class="card" style="padding: 2rem;">
+                    <!-- En-tête -->
+                    <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e2e8f0;">
+                        <!-- Badge branche -->
+                        <div style="display: inline-block; padding: 0.25rem 0.75rem; background: {{ $tutorial->branch->color }}20; color: {{ $tutorial->branch->color }}; border-radius: 0.375rem; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem;">
+                            {{ $tutorial->branch->name }}
+                        </div>
 
-            <div class="tutorial-layout" style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+            <div class="tutorial-layout" style="">
                 <!-- Contenu principal -->
                 <div>
                     <div class="card" style="padding: 2rem;">
@@ -90,123 +101,139 @@
                             </div>
                         @endif
 
-                        <!-- Contenu -->
-                        @if ($tutorial->content)
-                            <div style="margin-bottom: 2rem; line-height: 1.8; color: #334155;">
-                                {!! nl2br(e($tutorial->content)) !!}
-                            </div>
-                        @endif
+                    <!-- Contenu -->
+                    @if($tutorial->content)
+                        <div style="margin-bottom: 2rem; line-height: 1.8; color: #334155;">
+                            {!! $tutorial->content !!}
+                        </div>
+                    @endif
 
-                        <!-- Fichier joint ou vidéo -->
-                        @if ($tutorial->file_path || $tutorial->video_url)
-                            <div style="margin-top: 2rem; padding: 1.5rem; background: #f1f5f9; border-radius: 0.75rem;">
-                                @if ($tutorial->video_url)
-                                    <!-- Vidéo embed (YouTube/Vimeo) -->
-                                    <h3 style="font-size: 1.125rem; font-weight: 600; color: #0f172a; margin-bottom: 1rem;">
-                                        📹 Vidéo du tutoriel
-                                    </h3>
-                                    <div
-                                        style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 0.5rem;">
-                                        @php
-                                            $videoUrl = $tutorial->video_url;
-                                            $embedUrl = '';
-
-                                            // YouTube
-                                            if (
-                                                preg_match(
-                                                    '/youtube\.com\/watch\?v=([^\&\?\/]+)/',
-                                                    $videoUrl,
-                                                    $matches,
-                                                ) ||
-                                                preg_match('/youtu\.be\/([^\&\?\/]+)/', $videoUrl, $matches)
-                                            ) {
-                                                $embedUrl = 'https://www.youtube.com/embed/' . $matches[1];
-                                            }
-                                            // Vimeo
-                                            elseif (preg_match('/vimeo\.com\/(\d+)/', $videoUrl, $matches)) {
-                                                $embedUrl = 'https://player.vimeo.com/video/' . $matches[1];
-                                            }
-                                            // Dailymotion
-                                            elseif (
-                                                preg_match('/dailymotion\.com\/video\/([^_]+)/', $videoUrl, $matches)
-                                            ) {
-                                                $embedUrl = 'https://www.dailymotion.com/embed/video/' . $matches[1];
-                                            }
-                                        @endphp
-
-                                        @if ($embedUrl)
-                                            <iframe src="{{ $embedUrl }}"
-                                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
-                                                allowfullscreen
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-                                        @else
-                                            <div
-                                                style="padding: 2rem; text-align: center; background: white; border-radius: 0.5rem;">
-                                                <p style="margin-bottom: 1rem; color: #64748b;">Impossible d'intégrer cette
-                                                    vidéo automatiquement.</p>
-                                                <a href="{{ $tutorial->video_url }}" target="_blank"
-                                                    class="btn btn-primary">
-                                                    Ouvrir la vidéo
-                                                </a>
-                                            </div>
-                                        @endif
-                                    </div>
-                                @elseif($tutorial->file_path)
-                                    <!-- Fichier téléchargeable -->
-                                    <h3 style="font-size: 1.125rem; font-weight: 600; color: #0f172a; margin-bottom: 1rem;">
+                    <!-- Fichier joint ou vidéo -->
+                    @if($tutorial->file_path || $tutorial->video_url)
+                        <div style="margin-top: 2rem; padding: 1.5rem; background: #f1f5f9; border-radius: 0.75rem;">
+                            @if($tutorial->video_url)
+                                <!-- Vidéo embed (YouTube/Vimeo) -->
+                                <h3 style="font-size: 1.125rem; font-weight: 600; color: #0f172a; margin-bottom: 1rem;">
+                                    📹 Vidéo du tutoriel
+                                </h3>
+                                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 0.5rem;">
+                                    @php
+                                        $videoUrl = $tutorial->video_url;
+                                        $embedUrl = '';
+                                        
+                                        // YouTube
+                                        if (preg_match('/youtube\.com\/watch\?v=([^\&\?\/]+)/', $videoUrl, $matches) || preg_match('/youtu\.be\/([^\&\?\/]+)/', $videoUrl, $matches)) {
+                                            $embedUrl = 'https://www.youtube.com/embed/' . $matches[1];
+                                        }
+                                        // Vimeo
+                                        elseif (preg_match('/vimeo\.com\/(\d+)/', $videoUrl, $matches)) {
+                                            $embedUrl = 'https://player.vimeo.com/video/' . $matches[1];
+                                        }
+                                        // Dailymotion
+                                        elseif (preg_match('/dailymotion\.com\/video\/([^_]+)/', $videoUrl, $matches)) {
+                                            $embedUrl = 'https://www.dailymotion.com/embed/video/' . $matches[1];
+                                        }
+                                    @endphp
+                                    
+                                    @if($embedUrl)
+                                        <iframe 
+                                            src="{{ $embedUrl }}" 
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                                            allowfullscreen
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        ></iframe>
+                                    @else
+                                        <div style="padding: 2rem; text-align: center; background: white; border-radius: 0.5rem;">
+                                            <p style="margin-bottom: 1rem; color: #64748b;">Impossible d'intégrer cette vidéo automatiquement.</p>
+                                            <a href="{{ $tutorial->video_url }}" target="_blank" class="btn btn-primary">
+                                                Ouvrir la vidéo
+                                            </a>
+                                        </div>
+                                    @endif
+                                </div>
+                            @elseif($tutorial->file_path)
+                                @php
+                                    $extension = pathinfo($tutorial->file_path, PATHINFO_EXTENSION);
+                                    $isPdf = strtolower($extension) === 'pdf';
+                                @endphp
+                                
+                                <!-- Titre avec actions -->
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <h3 style="font-size: 1.125rem; font-weight: 600; color: #0f172a; margin: 0;">
                                         📁 Fichier joint
                                     </h3>
-                                    <div
-                                        style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: white; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-                                        <div style="display: flex; align-items: center; gap: 1rem;">
-                                            <div
-                                                style="width: 3rem; height: 3rem; background: {{ $tutorial->branch->color }}20; color: {{ $tutorial->branch->color }}; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;">
-                                                <svg style="width: 1.5rem; height: 1.5rem;" fill="none"
-                                                    stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                                    </path>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <div style="font-weight: 500; color: #0f172a;">
-                                                    {{ basename($tutorial->file_path) }}</div>
-                                                <div style="font-size: 0.875rem; color: #64748b;">
-                                                    {{ number_format($tutorial->file_size / 1024, 2) }} KB</div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    @if($isPdf)
+                                        <button onclick="togglePdfViewer()" class="btn btn-sm" style="background: #3b82f6; color: white;">
+                                            <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                            <span id="viewer-toggle-text">Afficher</span>
+                                        </button>
+                                    @else
+                                        <!-- Pour Word/Excel : Ouvrir directement -->
+                                        <a href="{{ Storage::url($tutorial->file_path) }}" target="_blank" class="btn btn-sm" style="background: #3b82f6; color: white;">
+                                            <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                            </svg>
+                                            Ouvrir
+                                        </a>
+                                    @endif
+                                    <a href="{{ Storage::url($tutorial->file_path) }}" download class="btn btn-sm" style="background: #10b981; color: white;">
+                                        <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                        </svg>
+                                        Télécharger
+                                    </a>
+                                </div>
+                                </div>
+                                
+                                <!-- Info fichier -->
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: white; border-radius: 0.5rem; border: 1px solid #e2e8f0; margin-bottom: 1rem;">
+                                    <div style="display: flex; align-items: center; gap: 1rem;">
+                                        <div style="width: 3rem; height: 3rem; background: {{ $tutorial->branch->color }}20; color: {{ $tutorial->branch->color }}; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                            <svg style="width: 1.5rem; height: 1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div style="font-weight: 500; color: #0f172a;">{{ basename($tutorial->file_path) }}</div>
+                                            <div style="font-size: 0.875rem; color: #64748b;">
+                                                {{ strtoupper($extension) }} • {{ number_format($tutorial->file_size / 1024, 2) }} KB
                                             </div>
                                         </div>
-                                        <a href="{{ Storage::url($tutorial->file_path) }}" download
-                                            class="btn btn-primary btn-sm">
-                                            <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4">
-                                                </path>
-                                            </svg>
-                                            Télécharger
-                                        </a>
                                     </div>
-                                @endif
-                            </div>
-                        @endif
-
-                        <!-- Tags -->
-                        @if ($tutorial->tags->count() > 0)
-                            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e2e8f0;">
-                                <h3 style="font-size: 1rem; font-weight: 600; color: #0f172a; margin-bottom: 1rem;">Tags
-                                </h3>
-                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                                    @foreach ($tutorial->tags as $tag)
-                                        <span
-                                            style="padding: 0.25rem 0.75rem; background: #f1f5f9; color: #475569; border-radius: 9999px; font-size: 0.875rem;">
-                                            #{{ $tag->name }}
-                                        </span>
-                                    @endforeach
                                 </div>
-                            </div>
-                        @endif
-                    </div>
-                </div>
+                                
+                                <!-- Viewer PDF (caché par défaut) -->
+                                @if($isPdf)
+                                    <div id="pdf-viewer" style="display: none; margin-top: 1rem;">
+                                        <iframe 
+                                            src="{{ Storage::url($tutorial->file_path) }}" 
+                                            style="width: 100%; height: 800px; border: 1px solid #e2e8f0; border-radius: 0.5rem;"
+                                            type="application/pdf"
+                                        ></iframe>
+                                    </div>
+                                    
+                                    <script>
+                                        function togglePdfViewer() {
+                                            const viewer = document.getElementById('pdf-viewer');
+                                            const toggleText = document.getElementById('viewer-toggle-text');
+                                            
+                                            if (viewer.style.display === 'none') {
+                                                viewer.style.display = 'block';
+                                                toggleText.textContent = 'Masquer';
+                                            } else {
+                                                viewer.style.display = 'none';
+                                                toggleText.textContent = 'Afficher';
+                                            }
+                                        }
+                                    </script>
+                                @endif
+                            @endif
+                        </div>
+                    @endif
 
                 <!-- Sidebar -->
                 <div>

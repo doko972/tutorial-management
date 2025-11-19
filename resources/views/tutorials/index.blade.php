@@ -30,9 +30,21 @@
                     <select name="branch" class="form-control">
                         <option value="">📁 Toutes les branches</option>
                         @foreach($branches as $branch)
-                            <option value="{{ $branch->id }}" {{ request('branch') == $branch->id ? 'selected' : '' }}>
-                                {{ $branch->name }} ({{ $branch->tutorials_count }})
-                            </option>
+                            @if($branch->parent_id === null)
+                                <!-- Branche principale -->
+                                <optgroup label="{{ $branch->name }}">
+                                    <option value="{{ $branch->id }}" {{ request('branch') == $branch->id ? 'selected' : '' }}>
+                                        📂 {{ $branch->name }} ({{ $branch->tutorials_count }})
+                                    </option>
+
+                                    <!-- Sous-branches -->
+                                    @foreach($branch->children as $child)
+                                        <option value="{{ $child->id }}" {{ request('branch') == $child->id ? 'selected' : '' }}>
+                                            &nbsp;&nbsp;└─ {{ $child->name }} ({{ $child->tutorials_count }})
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @endif
                         @endforeach
                     </select>
 
@@ -157,34 +169,34 @@
             <div class="mt-5">
                 {{ $tutorials->links() }}
             </div>
-       @else
-    <div class="card" style="padding: 4rem 2rem; text-align: center;">
-        <div id="lottie-no-results" style="width: 350px; height: 350px; margin: 0 auto;"></div>
-        <h3 style="font-size: 1.5rem; font-weight: 600; color: #0f172a; margin: 1.5rem 0 0.5rem;">
-            Aucun tutoriel trouvé
-        </h3>
-        <p style="color: #64748b; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
-            @if(request()->hasAny(['search', 'branch', 'type', 'tag', 'date', 'sort']))
-                Aucun tutoriel ne correspond à vos critères de recherche. Essayez avec d'autres filtres !
-            @else
-                Il n'y a pas encore de tutoriel disponible. Revenez plus tard !
-            @endif
-        </p>
-        @if(request()->hasAny(['search', 'branch', 'type', 'tag', 'date', 'sort']))
-            <a href="{{ route('tutorials.index') }}" class="btn btn-primary">Voir tous les tutoriels</a>
-        @endif
-    </div>
+        @else
+            <div class="card" style="padding: 4rem 2rem; text-align: center;">
+                <div id="lottie-no-results" style="width: 350px; height: 350px; margin: 0 auto;"></div>
+                <h3 style="font-size: 1.5rem; font-weight: 600; color: #0f172a; margin: 1.5rem 0 0.5rem;">
+                    Aucun tutoriel trouvé
+                </h3>
+                <p style="color: #64748b; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    @if(request()->hasAny(['search', 'branch', 'type', 'tag', 'date', 'sort']))
+                        Aucun tutoriel ne correspond à vos critères de recherche. Essayez avec d'autres filtres !
+                    @else
+                        Il n'y a pas encore de tutoriel disponible. Revenez plus tard !
+                    @endif
+                </p>
+                @if(request()->hasAny(['search', 'branch', 'type', 'tag', 'date', 'sort']))
+                    <a href="{{ route('tutorials.index') }}" class="btn btn-primary">Voir tous les tutoriels</a>
+                @endif
+            </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script>
-        lottie.loadAnimation({
-            container: document.getElementById('lottie-no-results'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: '/animations/no-results.json'
-        });
-    </script>
-@endif
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+            <script>
+                lottie.loadAnimation({
+                    container: document.getElementById('lottie-no-results'),
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: '/animations/no-results.json'
+                });
+            </script>
+        @endif
     </div>
 @endsection
