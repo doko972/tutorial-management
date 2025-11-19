@@ -24,7 +24,7 @@
     <!-- Messages de succès -->
 @if(session('success'))
     <div style="margin-bottom: 1.5rem; padding: 1.5rem; background: #d1fae5; border-radius: 0.75rem; border-left: 4px solid #10b981; display: flex; align-items: center; gap: 1rem;">
-        <div id="lottie-success" style="width: 60px; height: 60px; flex-shrink: 0;"></div>
+        <div id="lottie-success" style="width: 80px; height: 80px; flex-shrink: 0; overflow: visible;"></div>
         <div style="flex: 1;">
             <div style="font-weight: 600; color: #065f46; margin-bottom: 0.25rem;">Succès !</div>
             <div style="color: #047857; font-size: 0.875rem;">{{ session('success') }}</div>

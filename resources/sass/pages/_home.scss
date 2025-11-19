@@ -2,7 +2,7 @@
 .home-page {
     .welcome-banner {
         @include card;
-        background: linear-gradient(135deg, $primary 0%, darken($primary, 10%) 100%);
+        background: linear-gradient(135deg, $primary 0%, color-mix(in srgb, $primary, black 10%) 100%);
         color: $text-white;
         margin-bottom: $spacing-xl;
         padding: $spacing-2xl;
@@ -32,7 +32,7 @@
                     color: $primary;
 
                     &:hover {
-                        background: darken($text-white, 5%);
+                        background: color-mix(in srgb, $text-white, black 5%);
                     }
                 }
 

@@ -48,6 +48,7 @@ class MyTutorialController extends Controller
             'description' => 'nullable|string',
             'content' => 'nullable|string',
             'file_type' => 'required|in:document,pdf,video,link,text',
+            'branch_id' => 'required|exists:branches,id',
             'video_url' => 'nullable|url|max:500',
             'file' => 'nullable|file|max:51200', // 50MB max
             'thumbnail' => 'nullable|image|max:2048', // 2MB max
@@ -57,7 +58,7 @@ class MyTutorialController extends Controller
         ]);
 
         $validated['user_id'] = auth()->id();
-        $validated['branch_id'] = auth()->user()->branch_id;
+        // $validated['branch_id'] = auth()->user()->branch_id;
         $validated['slug'] = Str::slug($validated['title']);
 
         // Gestion du fichier
@@ -124,6 +125,7 @@ class MyTutorialController extends Controller
             'description' => 'nullable|string',
             'content' => 'nullable|string',
             'file_type' => 'required|in:document,pdf,video,link,text',
+            'branch_id' => 'required|exists:branches,id', 
             'file' => 'nullable|file|max:102400',
             'video_url' => 'nullable|url|max:500',
             'thumbnail' => 'nullable|image|max:2048',

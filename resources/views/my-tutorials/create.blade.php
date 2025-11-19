@@ -66,21 +66,17 @@
                     <select id="branch_id" name="branch_id" class="form-control @error('branch_id') has-error @enderror" required>
                         <option value="">Sélectionnez une branche</option>
                         @foreach($branches as $branch)
-                            @if($branch->parent_id === null)
-                                <!-- Branche principale -->
-                                <optgroup label="📂 {{ $branch->name }}">
-                                    <option value="{{ $branch->id }}" {{ old('branch_id') == $branch->id ? 'selected' : '' }}>
-                                        {{ $branch->name }}
-                                    </option>
-                                    
-                                    <!-- Sous-branches -->
-                                    @foreach($branch->children as $child)
-                                        <option value="{{ $child->id }}" {{ old('branch_id') == $child->id ? 'selected' : '' }}>
-                                            &nbsp;&nbsp;└─ {{ $child->name }}
-                                        </option>
-                                    @endforeach
-                                </optgroup>
-                            @endif
+                            <!-- Branche parente -->
+                            <option value="{{ $branch->id }}" {{ old('branch_id') == $branch->id ? 'selected' : '' }} style="font-weight: 600;">
+                                📂 {{ $branch->name }}
+                            </option>
+                            
+                            <!-- Sous-branches -->
+                            @foreach($branch->children as $child)
+                                <option value="{{ $child->id }}" {{ old('branch_id') == $child->id ? 'selected' : '' }} style="padding-left: 20px;">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;└─ {{ $child->name }}
+                                </option>
+                            @endforeach
                         @endforeach
                     </select>
                     @error('branch_id')

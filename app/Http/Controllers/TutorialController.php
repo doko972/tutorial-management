@@ -19,9 +19,20 @@ class TutorialController extends Controller
             ->published()
             ->latest();
 
-        // Filtrer par branche
         if ($request->has('branch') && $request->branch) {
-            $query->where('branch_id', $request->branch);
+            $branchId = $request->branch;
+            $branch = Branch::find($branchId);
+
+            if ($branch) {
+                // Si c'est une branche parente, inclure aussi les sous-branches
+                if ($branch->children()->count() > 0) {
+                    $childrenIds = $branch->children()->pluck('id')->toArray();
+                    $query->whereIn('branch_id', array_merge([$branchId], $childrenIds));
+                } else {
+                    // Sinon, juste la branche sélectionnée
+                    $query->where('branch_id', $branchId);
+                }
+            }
         }
 
         // Filtrer par type de fichier

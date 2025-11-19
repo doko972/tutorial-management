@@ -137,7 +137,7 @@
         padding: $spacing-lg;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
 
-        .branches-title {
+        .sidebar-section-title {
             font-size: $font-size-xs;
             font-weight: 600;
             color: rgba(255, 255, 255, 0.5);
@@ -146,18 +146,31 @@
             margin-bottom: $spacing-md;
         }
 
+        .branch-group {
+            margin-bottom: $spacing-xs;
+        }
+
         .branch-item {
             display: flex;
             align-items: center;
+            text-decoration: none;
             gap: $spacing-sm;
             padding: $spacing-sm;
             border-radius: $border-radius-md;
-            margin-bottom: $spacing-xs;
             cursor: pointer;
             @include transition(background);
 
             &:hover {
                 background: rgba(255, 255, 255, 0.05);
+            }
+
+            &.active {
+                background: rgba(255, 255, 255, 0.1);
+
+                .branch-name {
+                    color: rgba(255, 255, 255, 1);
+                    font-weight: 600;
+                }
             }
 
             .branch-color {
@@ -179,6 +192,30 @@
                 border-radius: $border-radius-sm;
                 font-size: $font-size-xs;
                 font-weight: 600;
+            }
+
+            .branch-chevron {
+                margin-left: 0 !important;
+                color: rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        .branch-parent {
+            font-weight: 500;
+        }
+
+        .branch-children {
+            margin-left: $spacing-sm;
+            margin-top: $spacing-xs;
+        }
+
+        .branch-child {
+            padding-left: $spacing-md;
+            font-size: $font-size-sm;
+
+            .branch-tree {
+                color: rgba(255, 255, 255, 0.3);
+                margin-right: $spacing-xs;
             }
         }
     }

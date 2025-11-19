@@ -55,6 +55,7 @@
         .landing-logo .logo-animation {
             width: 3rem;
             height: 3rem;
+            overflow: visible;
         }
 
         .landing-nav-links {

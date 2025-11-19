@@ -6,9 +6,6 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-// ============================================
-// CKEditor 5 Configuration
-// ============================================
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 document.addEventListener('DOMContentLoaded', function() {
