@@ -88,14 +88,18 @@
                 ->with([
                     'children' => function ($query) {
                         $query->withCount('tutorials');
-                    }
+                    },
                 ])
                 ->get()
                 ->map(function ($branch) {
                     // Calculer le total incluant les sous-branches
-                    $branch->total_tutorials_count = $branch->tutorials()->count() + $branch->children->sum('tutorials_count');
+                    $branch->total_tutorials_count =
+                        $branch->tutorials()->count() + $branch->children->sum('tutorials_count');
                     return $branch;
                 });
+
+            // Gérer request('branch') qui peut être un objet ou un ID
+            $currentBranchId = is_object(request('branch')) ? request('branch')->id : request('branch');
         @endphp
         @foreach ($branches as $branch)
             <div class="branch-group">
@@ -105,25 +109,25 @@
                     <span class="branch-name">{{ $branch->name }}</span>
                     <span class="branch-count">{{ $branch->total_tutorials_count }}</span>
                     @if ($branch->children->count() > 0)
-                        <svg class="branch-chevron" id="chevron-branch-{{ $branch->id }}" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24"
+                        <svg class="branch-chevron" id="chevron-branch-{{ $branch->id }}" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24"
                             style="width: 1rem; height: 1rem; margin-left: auto; transition: transform 0.3s;">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
                             </path>
                         </svg>
                     @endif
                 </div>
-
                 <!-- Sous-branches (cachées par défaut) -->
                 @if ($branch->children->count() > 0)
                     <div class="branch-children" id="branch-{{ $branch->id }}" style="display: none;">
                         @foreach ($branch->children as $child)
                             <a href="{{ route('tutorials.index', ['branch' => $child->id]) }}"
-                                class="branch-item branch-child {{ request('branch') == $child->id ? 'active' : '' }}">
+                                class="branch-item branch-child {{ $currentBranchId == $child->id ? 'active' : '' }}">
                                 <div style="width: 12px;"></div> <!-- Espace pour l'alignement -->
                                 <span class="branch-tree">└─</span>
                                 <span class="branch-name">{{ $child->name }}</span>
-                                <span class="branch-count">{{ $child->tutorials_count }}</span>
+                                <span
+                                    class="branch-count">{{ $child->tutorials_count ?? $child->tutorials()->count() }}</span>
                             </a>
                         @endforeach
                     </div>
@@ -131,7 +135,6 @@
             </div>
         @endforeach
     </div>
-
     <script>
         function toggleBranch(branchId) {
             const children = document.getElementById(branchId);
@@ -149,7 +152,7 @@
         }
 
         // Ouvrir automatiquement la branche active
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const activeChild = document.querySelector('.branch-child.active');
             if (activeChild) {
                 const parentId = activeChild.closest('.branch-children').id;
