@@ -363,7 +363,7 @@
                             </svg>
                             Se connecter
                         </a>
-                        <a href="{{ route('register') }}" class="hero-btn hero-btn-outline">Créer un compte</a>
+                        {{-- <a href="{{ route('register') }}" class="hero-btn hero-btn-outline">Créer un compte</a> --}}
                     @endauth
                 </div>
             </div>

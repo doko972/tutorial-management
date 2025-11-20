@@ -5,9 +5,12 @@
 @section('content')
     <div class="auth-card">
         <div class="auth-logo">
-            <div class="logo-icon">HT</div>
-            <h1>HR Télécoms</h1>
-            <p>Connectez-vous à votre espace tutoriels</p>
+            <!-- Logo -->
+            <div class="landing-logo-c">
+                <div id="logo-header" class="logo-animation-c"></div>
+                <h1>HR Télécoms</h1>
+            </div>
+            {{-- <p>Connectez-vous à votre espace tutoriels</p> --}}
         </div>
 
         <!-- Session Status -->
@@ -66,11 +69,11 @@
                     <label for="remember_me">Se souvenir de moi</label>
                 </div>
 
-                @if (Route::has('password.request'))
+                {{-- @if (Route::has('password.request'))
                     <a href="{{ route('password.request') }}" class="forgot-password">
                         Mot de passe oublié ?
                     </a>
-                @endif
+                @endif --}}
             </div>
 
             <!-- Submit Button -->
@@ -79,13 +82,15 @@
             </button>
         </form>
 
-        <div class="auth-footer">
+        {{-- <div class="auth-footer">
             <p>
                 Pas encore de compte ?
                 <a href="{{ route('register') }}">Créer un compte</a>
             </p>
-        </div>
+        </div> --}}
     </div>
+    @stack('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script>
         function togglePassword() {
             const passwordInput = document.getElementById('password');
@@ -102,5 +107,23 @@
                 eyeClosed.style.display = 'none';
             }
         }
+        // Animation logo header (coloré)
+        const logoHeader = lottie.loadAnimation({
+            container: document.getElementById('logo-header'),
+            renderer: 'svg',
+            loop: false, // Pas de boucle
+            autoplay: true, // Joue une fois au chargement
+            path: '/animations/logo.json'
+        });
+
+        // Rejouer l'animation au survol
+        document.getElementById('logo-header').addEventListener('mouseenter', function() {
+            logoHeader.goToAndPlay(0, true); // Rejoue depuis le début
+        });
+
+        // Rejouer l'animation au survol
+        document.getElementById('logo-footer').addEventListener('mouseenter', function() {
+            logoFooter.goToAndPlay(0, true); // Rejoue depuis le début
+        });
     </script>
 @endsection
