@@ -38,7 +38,7 @@
 
             <!-- Dropdown des notifications -->
             <div id="notifications-dropdown"
-                style="display: none; position: absolute; top: 100%; right: 0; margin-top: 0.5rem; width: 400px; max-width: 90vw; background: white; border-radius: 0.75rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); z-index: 1000; max-height: 500px; overflow-y: auto;">
+                style="display: none; position: absolute; top: 100%; right: 0; margin-top: 0.5rem; width: 400px; max-width: 90vw; background: white; border-radius: 0.75rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); z-index: 1000; max-height: 500px;">
                 <div
                     style="padding: 1rem; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
                     <h3 style="font-weight: 600; color: #0f172a; margin: 0;">Notifications</h3>
@@ -88,7 +88,7 @@
                             </div>
                         </a>
                     @empty
-                        <div style="padding: 2rem; text-align: center;">
+                        <div style="padding: 2rem; text-align: center;overflow: visible;">
                             <div id="lottie-no-notifications" style="width: 150px; height: 150px; margin: 0 auto;"></div>
                             <p style="font-size: 0.875rem; color: #94a3b8; margin-top: 0.5rem;">Aucune notification</p>
                         </div>

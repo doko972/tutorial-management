@@ -16,303 +16,6 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-
-    <style>
-        .landing-page {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #3b82f6 0%, #64748b 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .landing-navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .landing-navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2rem;
-        }
-
-        .landing-logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: #3b82f6;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .landing-logo .logo-animation {
-            width: 3rem;
-            height: 3rem;
-            overflow: visible;
-        }
-
-        .landing-nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .landing-nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.3s;
-        }
-
-        .landing-nav-links a:hover {
-            opacity: 0.8;
-        }
-
-        .hero-section {
-            padding-top: 8rem;
-            padding-bottom: 6rem;
-            text-align: center;
-            color: white;
-        }
-
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 3rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .hero-btn {
-            padding: 1rem 2.5rem;
-            border-radius: 0.75rem;
-            font-size: 1.125rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .hero-btn-primary {
-            background: white;
-            color: #3b82f6;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .hero-btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-btn-outline {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-
-        .hero-btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .stats-section {
-            background: white;
-            padding: 4rem 2rem;
-            margin: 0 2rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            transform: translateY(-10rem);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #3b82f6;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1.125rem;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .features-section {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 1rem;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.25rem;
-            color: #64748b;
-            margin-bottom: 4rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            width: 4rem;
-            height: 4rem;
-            background: linear-gradient(135deg, #3b82f6 0%, #64748b 100%);
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-icon svg {
-            width: 2rem;
-            height: 2rem;
-            color: white;
-        }
-
-        .feature-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #0f172a;
-            margin-bottom: 1rem;
-        }
-
-        .feature-description {
-            color: #64748b;
-            line-height: 1.7;
-        }
-
-        .branches-section {
-            padding: 0 2rem;
-            background: #f8fafc;
-        }
-
-        .branches-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .branches-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .branch-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s;
-            border-top: 4px solid;
-        }
-
-        .branch-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .branch-icon {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-        }
-
-        .branch-name {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #0f172a;
-            margin-bottom: 0.5rem;
-        }
-
-        .branch-count {
-            color: #64748b;
-        }
-
-        .cta-section {
-            padding: 6rem 2rem;
-            text-align: center;
-            background: linear-gradient(135deg, #3b82f6 0%, #64748b 100%);
-            color: white;
-        }
-
-        .cta-title {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
-        .cta-subtitle {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-    </style>
 </head>
 
 <body>
@@ -389,9 +92,10 @@
             <p class="section-subtitle">Explorez les tutoriels par branches</p>
 
             <div class="branches-grid">
-                @foreach($branches as $branch)
+                @foreach ($branches as $branch)
                     <div class="branch-card" style="border-top-color: {{ $branch->color }}">
-                        <div class="branch-icon" style="background: {{ $branch->color }}20; color: {{ $branch->color }}">
+                        <div class="branch-icon"
+                            style="background: {{ $branch->color }}20; color: {{ $branch->color }}">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
@@ -405,7 +109,7 @@
             </div>
         </div>
     </section>
-<!-- Footer -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <!-- Logo et description -->
@@ -415,7 +119,7 @@
                     <span>HR Télécoms</span>
                 </div>
                 <p class="footer-description">
-                    Plateforme de formation et de partage de connaissances. 
+                    Plateforme de formation et de partage de connaissances.
                     Accédez à des centaines de tutoriels pour développer vos compétences chez HR Télécoms.
                 </p>
             </div>
@@ -424,7 +128,7 @@
             <div class="footer-column">
                 <h4 class="footer-title">Les Branches</h4>
                 <ul class="footer-links">
-                    @foreach($branches as $branch)
+                    @foreach ($branches as $branch)
                         <li>
                             <a href="{{ route('tutorials.index', ['branch' => $branch->id]) }}">
                                 <span style="color: {{ $branch->color }};">●</span> {{ $branch->name }}
@@ -440,20 +144,27 @@
                 <ul class="footer-contact">
                     <li>
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                            </path>
                         </svg>
                         <a href="mailto:contact@hrttelecoms.fr">contact@hrttelecoms.fr</a>
                     </li>
                     <li>
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                            </path>
                         </svg>
                         <a href="tel:+33123456789">+33 2 31 43 50 11</a>
                     </li>
                     <li>
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                         <span>Caen, Normandie, France</span>
                     </li>
@@ -487,7 +198,7 @@
         });
 
         // Rejouer l'animation au survol
-        document.getElementById('logo-header').addEventListener('mouseenter', function () {
+        document.getElementById('logo-header').addEventListener('mouseenter', function() {
             logoHeader.goToAndPlay(0, true); // Rejoue depuis le début
         });
 
@@ -501,9 +212,12 @@
         });
 
         // Rejouer l'animation au survol
-        document.getElementById('logo-footer').addEventListener('mouseenter', function () {
-            logoFooter.goToAndPlay(0, true); // Rejoue depuis le début
-        });
+        const logoFooterElement = document.getElementById('logo-footer');
+        if (logoFooterElement) {
+            logoFooterElement.addEventListener('mouseenter', function() {
+                logoFooter.goToAndPlay(0, true); // Rejoue depuis le début
+            });
+        }
     </script>
 </body>
 

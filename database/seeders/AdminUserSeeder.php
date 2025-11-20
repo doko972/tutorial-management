@@ -18,9 +18,9 @@ class AdminUserSeeder extends Seeder
         User::create([
             'name' => 'Administrateur',
             'email' => 'admin@hrttelecoms.fr',
-            'password' => Hash::make('password'), // Change ce mot de passe en production !
+            'password' => Hash::make('password'),
             'role' => 'admin',
-            'branch_id' => null, // L'admin n'a pas de branche spécifique
+            'branch_id' => null,
         ]);
 
         // Créer un utilisateur manager pour chaque branche
