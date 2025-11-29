@@ -14,7 +14,14 @@ class BranchController extends Controller
      */
     public function index()
     {
-        $branches = Branch::withCount(['users', 'tutorials'])->get();
+        $branches = Branch::whereNull('parent_id')
+            ->withCount(['users', 'tutorials'])
+            ->with([
+                'children' => function ($query) {
+                    $query->withCount(['users', 'tutorials']);
+                }
+            ])
+            ->get();
         return view('admin.branches.index', compact('branches'));
     }
 
@@ -23,7 +30,8 @@ class BranchController extends Controller
      */
     public function create()
     {
-        return view('admin.branches.create');
+        $parentBranches = Branch::whereNull('parent_id')->get();
+        return view('admin.branches.create', compact('parentBranches'));
     }
 
     /**
@@ -36,6 +44,7 @@ class BranchController extends Controller
             'color' => 'required|string|max:7',
             'icon' => 'nullable|string|max:50',
             'description' => 'nullable|string',
+            'parent_id' => 'nullable|exists:branches,id',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
@@ -60,7 +69,8 @@ class BranchController extends Controller
      */
     public function edit(Branch $branch)
     {
-        return view('admin.branches.edit', compact('branch'));
+        $parentBranches = Branch::whereNull('parent_id')->where('id', '!=', $branch->id)->get();
+        return view('admin.branches.edit', compact('branch', 'parentBranches'));
     }
 
     /**
@@ -73,6 +83,7 @@ class BranchController extends Controller
             'color' => 'required|string|max:7',
             'icon' => 'nullable|string|max:50',
             'description' => 'nullable|string',
+            'parent_id' => 'nullable|exists:branches,id',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
