@@ -52,6 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('can:viewAny,App\Models\User')->prefix('admin')->name('admin.')->group(function () {
         Route::resource('branches', App\Http\Controllers\Admin\BranchController::class);
         Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+        Route::resource('tags', App\Http\Controllers\Admin\TagController::class);
     });
 
     // Notifications

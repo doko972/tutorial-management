@@ -75,6 +75,17 @@
                             <span class="nav-text">Branches</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.tags.index') }}"
+                            class="{{ request()->routeIs('admin.tags.*') ? 'active' : '' }}">
+                            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                </path>
+                            </svg>
+                            <span class="nav-text">Tags</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         @endif
@@ -109,8 +120,8 @@
                     <span class="branch-name">{{ $branch->name }}</span>
                     <span class="branch-count">{{ $branch->total_tutorials_count }}</span>
                     @if ($branch->children->count() > 0)
-                        <svg class="branch-chevron" id="chevron-branch-{{ $branch->id }}" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24"
+                        <svg class="branch-chevron" id="chevron-branch-{{ $branch->id }}" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24"
                             style="width: 1rem; height: 1rem; margin-left: auto; transition: transform 0.3s;">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
                             </path>
@@ -126,8 +137,7 @@
                                 <div style="width: 12px;"></div> <!-- Espace pour l'alignement -->
                                 <span class="branch-tree">└─</span>
                                 <span class="branch-name">{{ $child->name }}</span>
-                                <span
-                                    class="branch-count">{{ $child->tutorials_count ?? $child->tutorials()->count() }}</span>
+                                <span class="branch-count">{{ $child->tutorials_count ?? $child->tutorials()->count() }}</span>
                             </a>
                         @endforeach
                     </div>
@@ -152,7 +162,7 @@
         }
 
         // Ouvrir automatiquement la branche active
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const activeChild = document.querySelector('.branch-child.active');
             if (activeChild) {
                 const parentId = activeChild.closest('.branch-children').id;
