@@ -72,7 +72,7 @@
                         <label for="icon">Icône (optionnel)</label>
                         <input type="text" id="icon" name="icon"
                             class="form-control @error('icon') has-error @enderror"
-                            value="{{ old('icon', $branch->icon) }}" placeholder="Cliquez pour choisir une icône" readonly
+                            value="{{ old('icon') }}" placeholder="Cliquez pour choisir une icône" readonly
                             style="cursor: pointer;" onclick="toggleIconPicker()">
                         @error('icon')
                             <span class="form-error">{{ $message }}</span>
