@@ -110,11 +110,17 @@
                 @foreach($branches as $branch)
                     <div class="branch-card" style="border-top-color: {{ $branch->color }};">
                         <div class="branch-icon" style="background: {{ $branch->color }}20; color: {{ $branch->color }};">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                </path>
-                            </svg>
+                            @if($branch->icon)
+                                <i data-lucide="{{ $branch->icon }}"
+                                    style="width: 1.5rem; height: 1.5rem; color: {{ $branch->color }};"></i>
+                            @else
+                                <svg style="width: 1.5rem; height: 1.5rem; color: {{ $branch->color }};" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                    </path>
+                                </svg>
+                            @endif
                         </div>
                         <div class="branch-name">{{ $branch->name }}</div>
                         <div class="branch-count">{{ $branch->tutorials_count }} tutoriel(s)</div>
@@ -141,4 +147,10 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script>
+            lucide.createIcons();
+        </script>
+    @endpush
 @endsection

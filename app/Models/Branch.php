@@ -14,7 +14,8 @@ class Branch extends Model
         'slug',
         'description',
         'color',
-        'parent_id', // Ajoute cette ligne
+        'icon',
+        'parent_id',
     ];
 
     // Relation : une branche appartient à une branche parente

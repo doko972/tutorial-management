@@ -10,7 +10,8 @@
             <ol style="display: flex; gap: 0.5rem; list-style: none; padding: 0; font-size: 0.875rem; color: #64748b;">
                 <li><a href="{{ route('dashboard') }}" style="color: #3b82f6; text-decoration: none;">Accueil</a></li>
                 <li>/</li>
-                <li><a href="{{ route('admin.branches.index') }}" style="color: #3b82f6; text-decoration: none;">Branches</a>
+                <li><a href="{{ route('admin.branches.index') }}"
+                        style="color: #3b82f6; text-decoration: none;">Branches</a>
                 </li>
                 <li>/</li>
                 <li>Créer</li>
@@ -32,9 +33,8 @@
                     <!-- Nom -->
                     <div class="form-group">
                         <label for="name">Nom de la branche *</label>
-                        <input type="text" id="name" name="name"
-                            class="form-control @error('name') has-error @enderror" value="{{ old('name') }}" required
-                            placeholder="Ex: Ressources Humaines">
+                        <input type="text" id="name" name="name" class="form-control @error('name') has-error @enderror"
+                            value="{{ old('name') }}" required placeholder="Ex: Ressources Humaines">
                         <span class="form-text">Le slug sera généré automatiquement à partir du nom</span>
                         @error('name')
                             <span class="form-error">{{ $message }}</span>
@@ -44,9 +44,29 @@
                     <!-- Description -->
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea id="description" name="description" class="form-control @error('description') has-error @enderror"
-                            rows="3" placeholder="Description de la branche...">{{ old('description') }}</textarea>
+                        <textarea id="description" name="description"
+                            class="form-control @error('description') has-error @enderror" rows="3"
+                            placeholder="Description de la branche...">{{ old('description') }}</textarea>
                         @error('description')
+                            <span class="form-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <!-- Branche parente -->
+                    <div class="form-group">
+                        <label for="parent_id">Branche parente (optionnel)</label>
+                        <select id="parent_id" name="parent_id"
+                            class="form-control @error('parent_id') has-error @enderror">
+                            <option value="">-- Aucune (branche principale) --</option>
+                            @foreach($parentBranches as $parent)
+                                <option value="{{ $parent->id }}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>
+                                    {{ $parent->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <span class="form-text">Laissez vide pour créer une branche principale, ou sélectionnez une branche
+                            parente pour créer une sous-branche</span>
+                        @error('parent_id')
                             <span class="form-error">{{ $message }}</span>
                         @enderror
                     </div>
@@ -55,8 +75,7 @@
                     <div class="form-group">
                         <label for="color">Couleur *</label>
                         <div style="display: flex; gap: 1rem; align-items: center;">
-                            <input type="color" id="color" name="color" value="{{ old('color', '#3b82f6') }}"
-                                required
+                            <input type="color" id="color" name="color" value="{{ old('color', '#3b82f6') }}" required
                                 style="width: 4rem; height: 3rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; cursor: pointer;">
                             <input type="text" id="color-text" class="form-control" value="{{ old('color', '#3b82f6') }}"
                                 readonly style="flex: 1;">
@@ -70,9 +89,8 @@
                     <!-- Icône -->
                     <div class="form-group">
                         <label for="icon">Icône (optionnel)</label>
-                        <input type="text" id="icon" name="icon"
-                            class="form-control @error('icon') has-error @enderror"
-                            value="{{ old('icon', $branch->icon) }}" placeholder="Cliquez pour choisir une icône" readonly
+                        <input type="text" id="icon" name="icon" class="form-control @error('icon') has-error @enderror"
+                            value="{{ old('icon') }}" placeholder="Cliquez pour choisir une icône" readonly
                             style="cursor: pointer;" onclick="toggleIconPicker()">
                         @error('icon')
                             <span class="form-error">{{ $message }}</span>
@@ -199,7 +217,7 @@
                         }
 
                         // Fermer le picker si on clique en dehors
-                        document.addEventListener('click', function(event) {
+                        document.addEventListener('click', function (event) {
                             const picker = document.getElementById('icon-picker');
                             const input = document.getElementById('icon');
                             if (!picker.contains(event.target) && event.target !== input) {
@@ -233,11 +251,11 @@
             const colorPicker = document.getElementById('color');
             const colorText = document.getElementById('color-text');
 
-            colorPicker.addEventListener('input', function() {
+            colorPicker.addEventListener('input', function () {
                 colorText.value = this.value;
             });
 
-            colorText.addEventListener('input', function() {
+            colorText.addEventListener('input', function () {
                 if (/^#[0-9A-F]{6}$/i.test(this.value)) {
                     colorPicker.value = this.value;
                 }
