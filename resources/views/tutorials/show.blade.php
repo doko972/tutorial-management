@@ -88,7 +88,7 @@
                         <!-- Miniature -->
                         @if ($tutorial->thumbnail)
                             <img src="{{ Storage::url($tutorial->thumbnail) }}" alt="{{ $tutorial->title }}"
-                                style="width: 100%; height: auto; border-radius: 0.75rem; margin-bottom: 2rem;">
+                                style="width: 80%; height: auto; border-radius: 0.75rem; margin: 0 2rem 2rem 2rem;">
                         @endif
 
                         <!-- Description -->
