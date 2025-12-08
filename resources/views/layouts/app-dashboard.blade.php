@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('Tutorial Management') }} - @yield('title', 'Dashboard')</title>
+    <title>{{ config('Tutorial-Management') }} - @yield('title', 'Dashboard')</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,23 +39,23 @@
     @stack('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script>
-        // Animation logo header (coloré)
+        // Animation logo header
         const logoHeader = lottie.loadAnimation({
             container: document.getElementById('logo-header'),
             renderer: 'svg',
-            loop: false, // Pas de boucle
-            autoplay: true, // Joue une fois au chargement
+            loop: false,
+            autoplay: true,
             path: '/animations/logo-white.json'
         });
 
         // Rejouer l'animation au survol
         document.getElementById('logo-header').addEventListener('mouseenter', function() {
-            logoHeader.goToAndPlay(0, true); // Rejoue depuis le début
+            logoHeader.goToAndPlay(0, true);
         });
 
         // Rejouer l'animation au survol
         document.getElementById('logo-footer').addEventListener('mouseenter', function() {
-            logoFooter.goToAndPlay(0, true); // Rejoue depuis le début
+            logoFooter.goToAndPlay(0, true);
         });
     </script>
 </body>

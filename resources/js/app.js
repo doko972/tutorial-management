@@ -1,15 +1,46 @@
 import './bootstrap';
-
 import Alpine from 'alpinejs';
-
 window.Alpine = Alpine;
-
 Alpine.start();
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+// Adapter personnalisé pour l'upload
+class MyUploadAdapter {
+    constructor(loader) {
+        this.loader = loader;
+    }
+
+    upload() {
+        return this.loader.file.then(file => {
+            return new Promise((resolve, reject) => {
+                const data = new FormData();
+                data.append('upload', file);
+
+                fetch('/ckeditor/upload', {
+                    method: 'POST',
+                    body: data,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(response => response.json())
+                .then(result => {
+                    resolve({ default: result.url });
+                })
+                .catch(error => {
+                    reject(error);
+                });
+            });
+        });
+    }
+
+    abort() {
+        // Gestion de l'annulation si nécessaire
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialiser CKEditor sur tous les textareas avec la classe 'ckeditor'
     const textareas = document.querySelectorAll('textarea.ckeditor');
     
     textareas.forEach(textarea => {
@@ -20,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         'heading', '|',
                         'bold', 'italic', 'link', '|',
                         'bulletedList', 'numberedList', '|',
+                        'uploadImage', '|',
                         'blockQuote', 'insertTable', '|',
                         'undo', 'redo'
                     ]
@@ -35,6 +67,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 language: 'fr'
             })
             .then(editor => {
+                // Enregistrer l'adapter personnalisé
+                editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                    return new MyUploadAdapter(loader);
+                };
                 console.log('CKEditor initialisé', editor);
             })
             .catch(error => {
